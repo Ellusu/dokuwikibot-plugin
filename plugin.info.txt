@@ -1,0 +1,7 @@
+base   dokuwikibot
+author Matteo Enna
+email  matteo.enna89@gmail.com
+date   2016-08-24
+name   dokuwikibot plugin
+desc   DokuWikiBot is an Open Source framework that allows you to create a Bot Telegram in a short time, taking data from DokuWiki CMS.
+url    http://matteoenna.it/dokuwikibot-tra-telegram-e-dokuwiki/
