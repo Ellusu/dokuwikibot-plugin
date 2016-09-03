@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteCond %{REQUEST_URI} !\.(php|css|js|gif|png|jpe?g|pdf|eot|svg|ttf|woff|ico)$
+RewriteRule (.*)$ /index.php?_url=$1 [L]
