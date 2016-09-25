@@ -15,14 +15,14 @@ class admin_plugin_dokuwikibot extends DokuWiki_Admin_Plugin {
      * @return int sort number in admin menu
      */
     public function getMenuSort() {
-        return FIXME;
+        return 2;
     }
 
     /**
      * @return bool true if only access for superuser, false is for superusers and moderators
      */
     public function forAdminOnly() {
-        return false;
+        return true;
     }
 
     /**
@@ -36,18 +36,19 @@ class admin_plugin_dokuwikibot extends DokuWiki_Admin_Plugin {
      */
     public function html() {
         global $INPUT;
+        global $conf;
         
-        $doku_file = 'lib/plugins/dokuwikibot/conf/conf.json';
+        $doku_file = DOKU_CONF.'dokuwikibot_conf.json';
         
-        if(!file_exists('lib/plugins/dokuwikibot/conf/conf.json') || file_get_contents('lib/plugins/dokuwikibot/conf/conf.json')==""){
+        if(!file_exists(DOKU_CONF.'dokuwikibot_conf.json') || file_get_contents(DOKU_CONF.'dokuwikibot_conf.json')==""){
             $array=array(
                 'conf' => array(
                     'BOT_TOKEN'             => '[<token-bot>]',
                    // 'API_URL'               => 'https://api.telegram.org/bot'.BOT_TOKEN.'/'                    
                 ),
                 'advanced' => array(
-                    'dir_doku'              => '/',
-                    'doku_data'             => 'data/pages/'
+                    'dir_doku'              => DOKU_BASE,
+                    'doku_data'             => $conf['datadir']
                     
                 ),
                 'default_message' => array(
@@ -70,7 +71,7 @@ class admin_plugin_dokuwikibot extends DokuWiki_Admin_Plugin {
             fclose($fp);
             
         } else {
-            $json_data = file_get_contents('lib/plugins/dokuwikibot/conf/conf.json');
+            $json_data = file_get_contents(DOKU_CONF.'dokuwikibot_conf.json');
             $array = json_decode($json_data,true);
         }
         
@@ -137,7 +138,7 @@ class admin_plugin_dokuwikibot extends DokuWiki_Admin_Plugin {
         ptln("</form>");
         
         
-        $url = $_SERVER['HTTP_HOST'].str_replace('doku.php','lib/plugins/dokuwikibot/telegram.php',$_SERVER["PHP_SELF"]);
+        $url = $_SERVER['HTTP_HOST'].DOKU_BASE.'lib/plugins/dokuwikibot/telegram.php';
                 
         $webhook = 'https://api.telegram.org/bot'.$array['conf']['BOT_TOKEN'].'/setwebhook?url='.$url;
         
